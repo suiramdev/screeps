@@ -1,5 +1,7 @@
 import { TaskStatus } from "managers/tasksManager";
 
+const signText = "Territory of HamsterOh, all creeps inside will be destroyed.";
+
 export function run(creep: Creep): TaskStatus {
     if (creep.store.getUsedCapacity(RESOURCE_ENERGY) <= 0) {
         return TaskStatus.COMPLETED;
@@ -8,8 +10,8 @@ export function run(creep: Creep): TaskStatus {
     if (creep.room.controller) {
         creep.say("🔧 Upgrade");
 
-        if (creep.room.controller.sign?.username != "HamsterOh") {
-            if (creep.signController(creep.room.controller, "Territory of HamsterOh, all creeps inside will be destroyed.") == ERR_NOT_IN_RANGE) {
+        if (creep.room.controller.sign?.text != signText) {
+            if (creep.signController(creep.room.controller, signText) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.controller);
             }
         } else {

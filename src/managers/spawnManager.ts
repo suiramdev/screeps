@@ -18,11 +18,13 @@ export function run(): void {
         let spawn: StructureSpawn = Game.spawns[spawnName];
         let room: Room = spawn.room;
 
+        spawn.memory.needToSpawn = false;
         for (let i = 0; i < spawn.configuration().length; i++) {
             const configuration = spawn.configuration()[i];
 
             if (_.filter(room.find(FIND_MY_CREEPS), (c) => c.memory.role == configuration.role).length < configuration.max) {
-                spawn.spawnCreep(BodyParts[configuration.role], Math.random().toString(36).substr(2, 9), {
+                spawn.memory.needToSpawn = true;
+                spawn.spawnCreep(BodyParts[configuration.role], configuration.role + "_" + Math.random().toString(36).substr(2, 5), {
                     memory: {
                         defaultRole: configuration.role,
                         role: configuration.role,

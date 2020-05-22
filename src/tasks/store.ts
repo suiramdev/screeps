@@ -5,11 +5,12 @@ export function run(creep: Creep): TaskStatus {
         return TaskStatus.COMPLETED;
     }
 
-    const storage = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+    const storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
         filter: (structure) => {
-            return structure.structureType == STRUCTURE_STORAGE ||
-                structure.structureType == STRUCTURE_SPAWN ||
-                structure.structureType == STRUCTURE_EXTENSION
+            return structure.structureType == STRUCTURE_SPAWN ||
+                structure.structureType == STRUCTURE_EXTENSION ||
+                structure.structureType == STRUCTURE_STORAGE ||
+                structure.structureType == STRUCTURE_CONTAINER
         }
     });
     if (storage) {
