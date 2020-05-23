@@ -7,13 +7,14 @@ export function run(creep: Creep): TaskStatus {
 
     const ressource = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
     if (ressource) {
-        creep.say("⛏️ Harvest");
+        creep.say("⛏️");
 
         if (creep.harvest(ressource) == ERR_NOT_IN_RANGE) {
             creep.moveTo(ressource);
         }
     } else {
-        creep.say("⛏️❌ Harvest");
+        creep.say("⛏️❌");
+
         return TaskStatus.FAILED;
     }
 

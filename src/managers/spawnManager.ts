@@ -1,42 +1,41 @@
-import { Role, BodyParts, RoleTasks } from "./rolesManager";
-import { TaskStatus } from "./tasksManager";
+import { Role, RoleBodyParts, RoleTasks } from "./rolesManager";
 
-interface SpawnConfiguration {
-    [key: string]: any
+Room.prototype.configuration = function () {
+    return [
+        { role: Role.HARVESTER, min: 1, max: this.find(FIND_SOURCES).length * 2 },
+        { role: Role.BUILDER, min: this.find(FIND_MY_CONSTRUCTION_SITES).length, max: this.find(FIND_MY_CONSTRUCTION_SITES).length },
+        { role: Role.UPGRADER, min: this.controller ? 1 : 0, max: this.controller ? this.controller?.level * 2 : 0 }
+    ]
 }
 
-Spawn.prototype.configuration = function () {
-    return [
-        { role: Role.HARVESTER, min: 1, max: this.room.find(FIND_SOURCES).length * 2 },
-        { role: Role.BUILDER, min: 1, max: 1 },
-        { role: Role.UPGRADER, min: 1, max: 2 },
-    ]
+Room.prototype.getNeededRoles = function () {
+    let neededRoles: Array<Role> = [];
+    for (let i = 0; i < this.configuration().length; i++) {
+        const configuration = this.configuration()[i];
+
+        if (_.filter(this.find(FIND_MY_CREEPS), (creep) => creep.memory.role == configuration.role).length < configuration.max) {
+            neededRoles[neededRoles.length] = configuration.role
+        }
+    }
+
+    return neededRoles
 }
 
 export function run(): void {
     for (let spawnName in Game.spawns) {
-        let spawn: StructureSpawn = Game.spawns[spawnName];
-        let room: Room = spawn.room;
+        const spawn: StructureSpawn = Game.spawns[spawnName];
+        const room: Room = spawn.room;
 
-        spawn.memory.needToSpawn = false;
-        for (let i = 0; i < spawn.configuration().length; i++) {
-            const configuration = spawn.configuration()[i];
+        spawn.memory.needToSpawn = room.getNeededRoles().length > 0;
+        if (spawn.memory.needToSpawn) {
+            const role = room.getNeededRoles()[0];
 
-            if (_.filter(room.find(FIND_MY_CREEPS), (c) => c.memory.role == configuration.role).length < configuration.max) {
-                spawn.memory.needToSpawn = true;
-                spawn.spawnCreep(BodyParts[configuration.role], configuration.role + "_" + Math.random().toString(36).substr(2, 5), {
-                    memory: {
-                        defaultRole: configuration.role,
-                        role: configuration.role,
-                        roleTask: RoleTasks[configuration.role][0],
-                        roleTaskStatus: TaskStatus.OK,
-                        pauseRole: false
-                    }
-                });
-                break;
-            } else {
-                continue;
-            }
+            spawn.spawnCreep(RoleBodyParts[role], role + "_" + Math.random().toString(36).substr(2, 5), {
+                memory: {
+                    role: role,
+                    roleTask: RoleTasks[role][0]
+                }
+            });
         }
     }
 }

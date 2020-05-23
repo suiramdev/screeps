@@ -5,22 +5,26 @@ export function run(creep: Creep): TaskStatus {
         return TaskStatus.COMPLETED;
     }
 
-    const storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+    // Problem, find in order
+    const storages = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return structure.structureType == STRUCTURE_SPAWN ||
                 structure.structureType == STRUCTURE_EXTENSION ||
-                structure.structureType == STRUCTURE_STORAGE ||
-                structure.structureType == STRUCTURE_CONTAINER
+                structure.structureType == STRUCTURE_CONTAINER ||
+                structure.structureType == STRUCTURE_STORAGE &&
+                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
         }
     });
+    const storage = creep.pos.findClosestByPath(storages);
+
     if (storage) {
-        creep.say("📦 Store");
+        creep.say("📦");
 
         if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
             creep.moveTo(storage);
         }
     } else {
-        creep.say("📦❌ Store");
+        creep.say("📦❌");
 
         return TaskStatus.FAILED;
     }

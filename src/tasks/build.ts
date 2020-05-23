@@ -5,15 +5,16 @@ export function run(creep: Creep): TaskStatus {
         return TaskStatus.COMPLETED;
     }
 
-    const construction = creep.pos.findClosestByPath(FIND_MY_CONSTRUCTION_SITES);
-    if (construction) {
-        creep.say("🔨 Build");
+    // TODO: Find the already started construction site before doing the closest one
+    const constructions = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+    if (constructions[0]) {
+        creep.say("🔨");
 
-        if (creep.build(construction) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(construction);
+        if (creep.build(constructions[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(constructions[0]);
         }
     } else {
-        creep.say("🔨❌ Build");
+        creep.say("🔨❌");
 
         return TaskStatus.FAILED;
     }

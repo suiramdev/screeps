@@ -8,7 +8,7 @@ export function run(creep: Creep): TaskStatus {
     }
 
     if (creep.room.controller) {
-        creep.say("🔧 Upgrade");
+        creep.say("🔧");
 
         if (creep.room.controller.sign?.text != signText) {
             if (creep.signController(creep.room.controller, signText) == ERR_NOT_IN_RANGE) {
@@ -20,7 +20,7 @@ export function run(creep: Creep): TaskStatus {
             }
         }
     } else {
-        creep.say("🔧❌ Upgrade");
+        creep.say("🔧❌");
 
         return TaskStatus.FAILED
     }
