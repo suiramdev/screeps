@@ -5,15 +5,15 @@ export function run(creep: Creep): TaskStatus {
         return TaskStatus.COMPLETED;
     }
 
-    const ressource = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
-    if (ressource) {
-        creep.say("⛏️");
+    const resource = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+    if (resource) {
+        creep.speech("⛏️");
 
-        if (creep.harvest(ressource) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(ressource);
+        if (creep.harvest(resource) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(resource);
         }
     } else {
-        creep.say("⛏️❌");
+        creep.speech("⛏️❌");
 
         return TaskStatus.FAILED;
     }

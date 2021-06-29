@@ -8,23 +8,23 @@ export function run(creep: Creep): TaskStatus {
     // Problem, find in order
     const storages = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
-            return structure.structureType == STRUCTURE_SPAWN ||
-                structure.structureType == STRUCTURE_EXTENSION ||
-                structure.structureType == STRUCTURE_CONTAINER ||
-                structure.structureType == STRUCTURE_STORAGE &&
+            return structure.structureType === STRUCTURE_SPAWN ||
+                structure.structureType === STRUCTURE_EXTENSION ||
+                structure.structureType === STRUCTURE_CONTAINER ||
+                structure.structureType === STRUCTURE_STORAGE &&
                 structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
         }
     });
     const storage = creep.pos.findClosestByPath(storages);
 
     if (storage) {
-        creep.say("📦");
+        creep.speech("📦");
 
-        if (creep.transfer(storage, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
             creep.moveTo(storage);
         }
     } else {
-        creep.say("📦❌");
+        creep.speech("📦❌");
 
         return TaskStatus.FAILED;
     }

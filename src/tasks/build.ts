@@ -8,13 +8,13 @@ export function run(creep: Creep): TaskStatus {
     // TODO: Find the already started construction site before doing the closest one
     const constructions = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
     if (constructions[0]) {
-        creep.say("🔨");
+        creep.speech("🔨");
 
-        if (creep.build(constructions[0]) == ERR_NOT_IN_RANGE) {
+        if (creep.build(constructions[0]) === ERR_NOT_IN_RANGE) {
             creep.moveTo(constructions[0]);
         }
     } else {
-        creep.say("🔨❌");
+        creep.speech("🔨❌");
 
         return TaskStatus.FAILED;
     }

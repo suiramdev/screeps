@@ -1,5 +1,6 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 
+import "includes/roomVisual";
 import * as memoryManager from "managers/memoryManager";
 import * as rolesManager from "managers/rolesManager";
 import * as spawnManager from "managers/spawnManager";
@@ -10,8 +11,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
     memoryManager.run();
     spawnManager.run();
 
-    for (let creepName in Game.creeps) {
-        let creep: Creep = Game.creeps[creepName];
+    for (const creepName in Game.creeps) {
+        const creep: Creep = Game.creeps[creepName];
 
         rolesManager.run(creep);
     }

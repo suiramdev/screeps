@@ -3,6 +3,10 @@ interface Room {
     getNeededRoles(): any;
 }
 
+interface RoomVisual {
+  speech(pos: RoomPosition, text: string): any;
+}
+
 interface SpawnMemory {
     needToSpawn: boolean;
 }
@@ -10,6 +14,7 @@ interface SpawnMemory {
 interface Creep {
     runTask(task: any): number;
     runRole(role: any): void;
+    speech(message: string): void;
 }
 
 interface CreepMemory {

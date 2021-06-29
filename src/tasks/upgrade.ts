@@ -8,19 +8,19 @@ export function run(creep: Creep): TaskStatus {
     }
 
     if (creep.room.controller) {
-        creep.say("🔧");
+        creep.speech("🔧");
 
-        if (creep.room.controller.sign?.text != signText) {
-            if (creep.signController(creep.room.controller, signText) == ERR_NOT_IN_RANGE) {
+        if (creep.room.controller.sign?.text !== signText) {
+            if (creep.signController(creep.room.controller, signText) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.controller);
             }
         } else {
-            if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+            if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.room.controller);
             }
         }
     } else {
-        creep.say("🔧❌");
+        creep.speech("🔧❌");
 
         return TaskStatus.FAILED
     }

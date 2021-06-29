@@ -21,8 +21,8 @@ export const RoleTasks: Record<string, any> = {
 export function run(creep: Creep): void {
     if (creep.memory.pauseRole) { return; }
 
-    let taskStatus = creep.runTask(creep.memory.roleTask);
-    if (taskStatus == TaskStatus.COMPLETED) {
+    const taskStatus = creep.runTask(creep.memory.roleTask);
+    if (taskStatus === TaskStatus.COMPLETED) {
         const currentTaskIndex = RoleTasks[creep.memory.role].indexOf(creep.memory.roleTask);
         const nextTaskIndex = currentTaskIndex + 1 > RoleTasks[creep.memory.role].length ? 0 : currentTaskIndex + 1
         creep.memory.roleTask = RoleTasks[creep.memory.role][nextTaskIndex];

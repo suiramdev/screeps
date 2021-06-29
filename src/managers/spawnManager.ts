@@ -9,11 +9,9 @@ Room.prototype.configuration = function () {
 }
 
 Room.prototype.getNeededRoles = function () {
-    let neededRoles: Array<Role> = [];
-    for (let i = 0; i < this.configuration().length; i++) {
-        const configuration = this.configuration()[i];
-
-        if (_.filter(this.find(FIND_MY_CREEPS), (creep) => creep.memory.role == configuration.role).length < configuration.max) {
+    const neededRoles: Role[] = [];
+    for (const configuration of this.configuration()) {
+        if (_.filter(this.find(FIND_MY_CREEPS), (creep) => creep.memory.role === configuration.role).length < configuration.max) {
             neededRoles[neededRoles.length] = configuration.role
         }
     }
@@ -22,7 +20,7 @@ Room.prototype.getNeededRoles = function () {
 }
 
 export function run(): void {
-    for (let spawnName in Game.spawns) {
+    for (const spawnName in Game.spawns) {
         const spawn: StructureSpawn = Game.spawns[spawnName];
         const room: Room = spawn.room;
 
@@ -32,8 +30,8 @@ export function run(): void {
 
             spawn.spawnCreep(RoleBodyParts[role], role + "_" + Math.random().toString(36).substr(2, 5), {
                 memory: {
-                    role: role,
-                    roleTask: RoleTasks[role][0]
+                    "role": role,
+                    "roleTask": RoleTasks[role][0]
                 }
             });
         }
