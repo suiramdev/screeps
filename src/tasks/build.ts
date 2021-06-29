@@ -6,12 +6,17 @@ export function run(creep: Creep): TaskStatus {
     }
 
     // TODO: Find the already started construction site before doing the closest one
-    const constructions = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
-    if (constructions[0]) {
+    if (!creep.memory.target) {
+      creep.memory.target = creep.room.find(FIND_MY_CONSTRUCTION_SITES)[0].id;
+    }
+    if (creep.memory.target) {
+        const target = creep.room.find(FIND_MY_CONSTRUCTION_SITES, {
+          filter: { id: creep.memory.target }
+        })[0];
         creep.speech("🔨");
 
-        if (creep.build(constructions[0]) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(constructions[0]);
+        if (creep.build(target) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(target);
         }
     } else {
         creep.speech("🔨❌");
