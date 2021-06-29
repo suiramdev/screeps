@@ -27,4 +27,13 @@ export function run(creep: Creep): void {
         const nextTaskIndex = currentTaskIndex + 1 > RoleTasks[creep.memory.role].length ? 0 : currentTaskIndex + 1
         creep.memory.roleTask = RoleTasks[creep.memory.role][nextTaskIndex];
     }
+
+    if (Memory.debug.drawRoles === 1) {
+      creep.room.visual.text(creep.memory.role.substr(0, 1), creep.pos, {
+        font: 0.25,
+        color: "#85ae89",
+        stroke: "#000000",
+        strokeWidth: 0.1
+      });
+    }
 }

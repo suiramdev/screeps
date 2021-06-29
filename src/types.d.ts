@@ -1,3 +1,7 @@
+interface Memory {
+  debug: any
+}
+
 interface Room {
     configuration(): any;
     getNeededRoles(): any;
