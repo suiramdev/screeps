@@ -8,11 +8,16 @@ export function run(creep: Creep): TaskStatus {
     // Problem, find in order
     const storages = creep.room.find(FIND_STRUCTURES, {
         filter: (structure) => {
-            return (structure.structureType === STRUCTURE_SPAWN ||
-                structure.structureType === STRUCTURE_EXTENSION ||
-                structure.structureType === STRUCTURE_CONTAINER ||
-                structure.structureType === STRUCTURE_STORAGE) &&
-                structure.store[RESOURCE_ENERGY] >= 5
+          if (structure.structureType === STRUCTURE_SPAWN ||
+            structure.structureType === STRUCTURE_EXTENSION ||
+            structure.structureType === STRUCTURE_CONTAINER ||
+            structure.structureType === STRUCTURE_STORAGE) {
+            const store = structure.store as GenericStore;
+            // @ts-ignore
+            return store.getFreeCapacity(RESOURCE_ENERGY) <= 0;
+          }
+
+          return false
         }
     });
     const storage = creep.pos.findClosestByPath(storages);
