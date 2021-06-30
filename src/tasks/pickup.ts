@@ -12,6 +12,9 @@ export function run(creep: Creep): TaskStatus {
             structure.structureType === STRUCTURE_EXTENSION ||
             structure.structureType === STRUCTURE_CONTAINER ||
             structure.structureType === STRUCTURE_STORAGE) {
+            if (structure.structureType === STRUCTURE_SPAWN && structure.memory.needToSpawn)
+                return false
+
             const store = structure.store as GenericStore;
             // @ts-ignore
             return store.getFreeCapacity(RESOURCE_ENERGY) <= 0;

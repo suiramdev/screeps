@@ -3,19 +3,22 @@ import { Task, TaskStatus } from "./tasksManager";
 export enum Role {
     HARVESTER = "HARVESTER",
     UPGRADER = "UPGRADER",
-    BUILDER = "BUILDER"
+    BUILDER = "BUILDER",
+    REPAIRER = "REPAIRER"
 }
 
 export const RoleBodyParts: Record<string, BodyPartConstant[]> = {
     [Role.HARVESTER]: [MOVE, CARRY, WORK],
     [Role.UPGRADER]: [MOVE, CARRY, WORK],
-    [Role.BUILDER]: [MOVE, CARRY, WORK]
+    [Role.BUILDER]: [MOVE, CARRY, WORK],
+    [Role.REPAIRER]: [MOVE, CARRY, WORK]
 }
 
 export const RoleTasks: Record<string, any> = {
     [Role.HARVESTER]: [Task.HARVEST, Task.STORE],
     [Role.UPGRADER]: [Task.UPGRADE, Task.PICKUP],
-    [Role.BUILDER]: [Task.BUILD, Task.PICKUP]
+    [Role.BUILDER]: [Task.BUILD, Task.PICKUP],
+    [Role.REPAIRER]: [Task.REPAIR, Task.PICKUP]
 }
 
 export function run(creep: Creep): void {

@@ -25,5 +25,6 @@ interface CreepMemory {
     role: string;
     roleTask: number;
     pauseRole?: boolean;
-    target?: string;
+    buildTarget?: string;
+    repairTarget?: string;
 }

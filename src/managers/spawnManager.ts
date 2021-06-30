@@ -4,7 +4,8 @@ Room.prototype.configuration = function () {
     return [
         { role: Role.HARVESTER, min: 1, max: this.find(FIND_SOURCES).length * 2 },
         { role: Role.BUILDER, min: this.find(FIND_MY_CONSTRUCTION_SITES).length, max: this.find(FIND_MY_CONSTRUCTION_SITES).length },
-        { role: Role.UPGRADER, min: this.controller ? 1 : 0, max: this.controller ? this.controller?.level * 2 : 0 }
+        { role: Role.UPGRADER, min: this.controller ? 1 : 0, max: this.controller ? this.controller?.level * 2 : 0 },
+        { role: Role.REPAIRER, min: 1, max: this.find(FIND_STRUCTURES).length }
     ]
 }
 
