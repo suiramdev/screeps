@@ -1,18 +1,15 @@
 interface Memory {
-  debug: any
+    debug: any
 }
 
 interface Room {
     configuration(): any;
-    getNeededRoles(): any;
+    neededRoles(): string[];
+    closestSpawns(): StructureSpawn[];
 }
 
 interface RoomVisual {
-  speech(pos: RoomPosition, text: string): any;
-}
-
-interface SpawnMemory {
-    needToSpawn: boolean;
+    speech(pos: RoomPosition, text: string): any;
 }
 
 interface Creep {
@@ -23,8 +20,8 @@ interface Creep {
 
 interface CreepMemory {
     role: string;
-    roleTask: number;
+    task: string;
+    room: string;
     pauseRole?: boolean;
-    buildTarget?: string;
-    repairTarget?: string;
+    target?: string;
 }
