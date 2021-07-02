@@ -1,7 +1,7 @@
-Memory.debug = {
-  drawPath: 1,
-  drawSpeeches: 1,
-  drawRoles: 1
+if (!Memory.debug) Memory.debug = {
+    drawPath: 1,
+    drawSpeeches: 1,
+    drawRoles: 1
 }
 
 function relPoly(x: number, y: number, poly: number[][]){
@@ -46,7 +46,7 @@ Creep.prototype.speech = function (message) {
 }
 
 // @ts-ignore
-Creep.prototype._moveTo = Creep.prototype.moveTo;
+if (!Creep.prototype._moveTo) Creep.prototype._moveTo = Creep.prototype.moveTo;
 // @ts-ignore
 Creep.prototype.moveTo = function (...args) {
     if (Memory.debug.drawPath === 1) {
