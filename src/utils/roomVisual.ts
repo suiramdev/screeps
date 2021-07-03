@@ -54,9 +54,9 @@ Creep.prototype.moveTo = function (...args) {
 
         if (typeof args[0] === "object")
             if (args[0].pos)
-              this.room.visual.line(this.pos, args[0].pos, style);
+                this.room.visual.line(this.pos, args[0].pos, style);
             else
-              this.room.visual.line(this.pos.x, this.pos.y, args[0].x, args[1].y, style);
+                this.room.visual.line(this.pos.x, this.pos.y, args[0].x, args[1].y, style);
         else
             this.room.visual.line(this.pos.x, this.pos.y, args[0], args[1], style);
     }

@@ -1,5 +1,6 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 import "utils/roomVisual";
+import "utils/room";
 
 import * as memoryManager from "managers/memoryManager";
 import * as rolesManager from "managers/rolesManager";

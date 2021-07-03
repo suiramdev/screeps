@@ -2,21 +2,28 @@ import {Task, TaskStatus} from "./tasksManager";
 
 export enum Role {
     HARVESTER = "HARVESTER",
-    CARRIER = "CARRIER"
+    CARRIER = "CARRIER",
+    UPGRADER = "UPGRADER"
 }
 
 export const RoleBodyParts: Record<string, BodyPartConstant[]> = {
-    [Role.HARVESTER]: [MOVE, WORK, WORK]
+    [Role.HARVESTER]:   [MOVE, WORK, WORK],
+    [Role.CARRIER]:     [MOVE, MOVE, CARRY, CARRY],
+    [Role.UPGRADER]:    [MOVE, CARRY, WORK, WORK]
 }
 
 export const RoleTasks: Record<string, string[]> = {
-    [Role.HARVESTER]: [Task.HARVEST],
+    [Role.HARVESTER]:   [Task.HARVEST],
+    [Role.CARRIER]:     [Task.CARRY, Task.SPREAD_ENERGY],
+    [Role.UPGRADER]:    [Task.UPGRADE]
 }
 
 export function run(creep: Creep): void {
     if (creep.memory.pauseRole) {
         return;
     }
+
+    if (!creep.memory.task) creep.memory.task = RoleTasks[creep.memory.role][0];
 
     const taskStatus = creep.runTask(creep.memory.task);
     if (taskStatus === TaskStatus.COMPLETED) {

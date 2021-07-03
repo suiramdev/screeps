@@ -4,7 +4,15 @@ Room.prototype.configuration = function () {
     return [
         {
             role: Role.HARVESTER,
-            needed: this.find(FIND_SOURCES).length
+            needed: this.sourceStorages().length
+        },
+        {
+            role: Role.CARRIER,
+            needed: this.sourceStorages().length
+        },
+        {
+            role: Role.UPGRADER,
+            needed: this.controller ? 1 : 0
         }
     ];
 }
@@ -31,7 +39,6 @@ export function run(): void {
         const room = Game.rooms[roomHash];
 
         if (Game.time % 100 === 0 || !configurations[roomHash]) {
-            console.log("Calculating rooms configuration");
             configurations[roomHash] = room.configuration();
         }
 
@@ -47,6 +54,8 @@ export function run(): void {
                         room: room.name
                     }
                 });
+
+                console.log(RoleTasks[neededRole][0]);
 
                 if (spawnStatus === OK)
                     console.log(`Spawn ${creepName} on ${spawn.name} in ${room.name}`);

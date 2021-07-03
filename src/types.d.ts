@@ -6,6 +6,7 @@ interface Room {
     configuration(): any;
     neededRoles(): string[];
     closestSpawns(): StructureSpawn[];
+    sourceStorages(): StructureStorage[];
 }
 
 interface RoomVisual {
@@ -22,6 +23,7 @@ interface CreepMemory {
     role: string;
     task: string;
     room: string;
+    needEnergy?: boolean;
     pauseRole?: boolean;
     target?: string;
 }
