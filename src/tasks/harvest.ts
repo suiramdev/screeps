@@ -17,7 +17,7 @@ export function run(creep: Creep): TaskStatus {
 
     targetSource = targetStorage.pos.findInRange(FIND_SOURCES, 2)[0];
 
-    if (creep.pos !== targetStorage.pos) creep.moveTo(targetStorage);
+    if (creep.pos !== targetStorage.pos) creep.travelTo(targetStorage);
     creep.harvest(targetSource);
 
     creep.speech("⛏️");

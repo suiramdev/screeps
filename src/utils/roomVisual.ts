@@ -1,5 +1,4 @@
 if (!Memory.debug) Memory.debug = {
-    drawPath: 1,
     drawSpeeches: 1,
     drawRoles: 1
 }

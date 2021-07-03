@@ -15,7 +15,7 @@ export function run(creep: Creep): TaskStatus {
     if (!target) return TaskStatus.COMPLETED;
 
     if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE)
-        creep.moveTo(target);
+        creep.travelTo(target);
 
     creep.speech("📦");
 
