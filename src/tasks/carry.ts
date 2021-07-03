@@ -16,7 +16,7 @@ export function run(creep: Creep): TaskStatus {
 
     for (const resourceType of RESOURCES_ALL) {
         if (creep.withdraw(target, resourceType) === ERR_NOT_IN_RANGE)
-            creep.moveTo(target);
+            creep.travelTo(target);
     }
 
     creep.speech("👌");

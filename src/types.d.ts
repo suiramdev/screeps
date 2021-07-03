@@ -2,6 +2,15 @@ interface Memory {
     debug: any
 }
 
+interface CreepMemory {
+    role: string;
+    task: string;
+    room: string;
+    needEnergy?: boolean;
+    pauseRole?: boolean;
+    target?: string;
+}
+
 interface Room {
     configuration(): any;
     neededRoles(): string[];
@@ -17,13 +26,4 @@ interface Creep {
     runTask(task: any): number;
     runRole(role: any): void;
     speech(message: string): void;
-}
-
-interface CreepMemory {
-    role: string;
-    task: string;
-    room: string;
-    needEnergy?: boolean;
-    pauseRole?: boolean;
-    target?: string;
 }

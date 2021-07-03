@@ -44,22 +44,3 @@ RoomVisual.prototype.speech = function (pos, text) {
 Creep.prototype.speech = function (message) {
     this.room.visual.speech(this.pos, message);
 }
-
-// @ts-ignore
-if (!Creep.prototype._moveTo) Creep.prototype._moveTo = Creep.prototype.moveTo;
-// @ts-ignore
-Creep.prototype.moveTo = function (...args) {
-    if (Memory.debug.drawPath === 1) {
-        const style: LineStyle = {color: '#000000', lineStyle: "dashed"};
-
-        if (typeof args[0] === "object")
-            if (args[0].pos)
-                this.room.visual.line(this.pos, args[0].pos, style);
-            else
-                this.room.visual.line(this.pos.x, this.pos.y, args[0].x, args[1].y, style);
-        else
-            this.room.visual.line(this.pos.x, this.pos.y, args[0], args[1], style);
-    }
-    // @ts-ignore
-    this._moveTo.apply(this, args);
-}
