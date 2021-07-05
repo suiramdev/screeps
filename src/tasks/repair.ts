@@ -1,4 +1,4 @@
-import { TaskStatus } from "managers/tasksManager";
+import { TaskStatus, Task } from "managers/tasksManager";
 
 export function run(creep: Creep): TaskStatus {
     const room = Game.rooms[creep.memory.room];
@@ -12,7 +12,7 @@ export function run(creep: Creep): TaskStatus {
     });
     targets.sort((a,b) => a.hits - b.hits);
 
-    if(!targets.length <= 0) return TaskStatus.FAILED;
+    if(targets.length <= 0) return creep.runTask(Task.BUILD);
 
     if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
         creep.travelTo(targets[0]);
