@@ -26,6 +26,14 @@ export function run(creep: Creep): void {
         return;
     }
 
+    if (creep.memory.needEnergy && creep.store.getFreeCapacity() > 0 &&
+        _.filter(Game.creeps, c => c.memory.role === Role.CARRIER).length <= 0) {
+        const target: Source | null = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+        if (target && creep.harvest(target) === ERR_NOT_IN_RANGE) creep.travelTo(target);
+
+        return;
+    }
+
     if (!creep.memory.task) creep.memory.task = RoleTasks[creep.memory.role][0];
 
     const taskStatus = creep.runTask(creep.memory.task);
