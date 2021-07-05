@@ -13,6 +13,10 @@ Room.prototype.configuration = function () {
         {
             role: Role.UPGRADER,
             needed: this.controller ? 1 : 0
+        },
+        {
+            role: Role.REPAIRER,
+            needed: this.find(FIND_STRUCTURES).length ? 1 : 0
         }
     ];
 }
@@ -46,7 +50,7 @@ export function run(): void {
         if (neededRole) {
             const spawn = _.filter(room.closestSpawns(), s => !s.spawning && s.store[RESOURCE_ENERGY] >= _.sum(RoleBodyParts[neededRole].map((b) => BODYPART_COST[b])))[0];
             if (spawn) {
-                const creepName = Math.random().toString(36).substr(2, 5);
+                const creepName = neededRole + "_" + Math.random().toString(36).substr(2, 5);
                 const spawnStatus = spawn.spawnCreep(RoleBodyParts[neededRole], creepName, {
                     memory: {
                         role: neededRole,
