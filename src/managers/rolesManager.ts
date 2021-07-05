@@ -7,19 +7,27 @@ export enum Role {
 }
 
 export const RoleBodyParts: Record<string, BodyPartConstant[]> = {
-    [Role.HARVESTER]:   [MOVE, WORK, WORK],
-    [Role.CARRIER]:     [MOVE, MOVE, CARRY, CARRY],
-    [Role.UPGRADER]:    [MOVE, CARRY, WORK, WORK]
+    [Role.HARVESTER]: [MOVE, WORK, WORK],
+    [Role.CARRIER]: [MOVE, MOVE, CARRY, CARRY],
+    [Role.UPGRADER]: [MOVE, CARRY, WORK, WORK]
 }
 
 export const RoleTasks: Record<string, string[]> = {
-    [Role.HARVESTER]:   [Task.HARVEST],
-    [Role.CARRIER]:     [Task.CARRY, Task.SPREAD_ENERGY],
-    [Role.UPGRADER]:    [Task.UPGRADE]
+    [Role.HARVESTER]: [Task.HARVEST],
+    [Role.CARRIER]: [Task.CARRY, Task.SPREAD_ENERGY],
+    [Role.UPGRADER]: [Task.UPGRADE]
 }
 
 export function run(creep: Creep): void {
     if (creep.memory.pauseRole) {
+        return;
+    }
+
+    if (creep.memory.needEnergy && creep.store.getFreeCapacity() > 0 &&
+        _.filter(Game.creeps, c => c.memory.role === Role.CARRIER).length <= 0) {
+        const target: Source | null = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+        if (target && creep.harvest(target) === ERR_NOT_IN_RANGE) creep.travelTo(target);
+
         return;
     }
 
