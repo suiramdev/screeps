@@ -4,6 +4,7 @@ import * as taskCarry from "tasks/carry";
 import * as taskSpread from "tasks/spreadEnergy";
 import * as taskUpgrade from "tasks/upgrade";
 import * as taskRepair from "tasks/repair";
+import * as taskBuild from "tasks/build";
 
 export enum Task {
     IDLE = "idle",
@@ -11,7 +12,8 @@ export enum Task {
     CARRY = "carry",
     SPREAD_ENERGY = "spreadEnergy",
     UPGRADE = "upgrade",
-    REPAIR = "repair"
+    REPAIR = "repair",
+    BUILD = "build"
 }
 
 export enum TaskStatus {
@@ -32,6 +34,8 @@ Creep.prototype.runTask = function (task: Task): TaskStatus {
             return taskUpgrade.run(this);
         case Task.REPAIR:
             return taskRepair.run(this);
+        case Task.BUILD:
+            return taskBuild.run(this);
         default:
             return taskIdle.run(this);
     }

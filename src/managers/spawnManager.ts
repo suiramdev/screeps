@@ -16,7 +16,11 @@ Room.prototype.configuration = function () {
         },
         {
             role: Role.REPAIRER,
-            needed: this.find(FIND_STRUCTURES).length ? 1 : 0
+            needed: this.find(FIND_MY_STRUCTURES).length ? 1 : 0
+        },
+        {
+            role: Role.BUILDER,
+            needed: this.find(FIND_MY_CONSTRUCTION_SITES).length ? 1 : 0
         }
     ];
 }
