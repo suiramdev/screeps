@@ -20,9 +20,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
         rolesManager.run(creep);
     }
 
-    const towers = _.filter(Game.structures, (s) => s.structureType == STRUCTURE_TOWER)
+    const towers = _.filter(Game.structures, (s) => s.structureType == STRUCTURE_TOWER);
 
-    for (const tower of towers) {
+    for (const tower of towers)
         structuresManager.run(tower as StructureTower);
-    }
 });
