@@ -14,7 +14,7 @@ export function run(creep: Creep): TaskStatus {
 
     if(targets.length <= 0) return TaskStatus.FAILED;
 
-    if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+    if(creep.build(targets[0]) === ERR_NOT_IN_RANGE) {
         creep.travelTo(targets[0])
     }
 
