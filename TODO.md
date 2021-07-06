@@ -40,3 +40,8 @@ Derived tasks: When an error occurs on the precedent task, the creep will try to
 - Spawn the first harvester with one carry parts, so he make his own resource active.
 
 - Carriers: Go to the most filled / resource assigned ???
+
+### Extending / Farm to other rooms
+-
+### Market
+-
