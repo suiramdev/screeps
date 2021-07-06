@@ -18,17 +18,16 @@ export function run(creep: Creep): TaskStatus {
     });
     const storage = creep.pos.findClosestByPath(storages);
 
-    if (storage) {
-        creep.speech("📦");
-
-        if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(storage);
-        }
-    } else {
+    if (!storage) {
         creep.speech("📦❌");
 
         return TaskStatus.FAILED;
     }
-
+    
+    creep.speech("📦");
+    
+    if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) 
+        creep.moveTo(storage);
+  
     return TaskStatus.WORKING;
 }
