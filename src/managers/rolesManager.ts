@@ -5,7 +5,8 @@ export enum Role {
     CARRIER = "CARRIER",
     UPGRADER = "UPGRADER",
     REPAIRER = "REPAIRER",
-    BUILDER = "BUILDER"
+    BUILDER = "BUILDER",
+    SAFER = "SAFER"
 }
 
 export const RoleBodyParts: Record<string, BodyPartConstant[]> = {
@@ -13,7 +14,8 @@ export const RoleBodyParts: Record<string, BodyPartConstant[]> = {
     [Role.CARRIER]:     [MOVE, MOVE, CARRY, CARRY],
     [Role.UPGRADER]:    [MOVE, CARRY, WORK, WORK],
     [Role.REPAIRER]:    [MOVE, CARRY, WORK],
-    [Role.BUILDER]:     [MOVE, CARRY, WORK]
+    [Role.BUILDER]:     [MOVE, CARRY, WORK],
+    [Role.SAFER]:       [MOVE, CARRY, CARRY]
 }
 
 export const RoleTasks: Record<string, string[]> = {
@@ -21,7 +23,8 @@ export const RoleTasks: Record<string, string[]> = {
     [Role.CARRIER]:     [Task.CARRY, Task.SPREAD_ENERGY],
     [Role.UPGRADER]:    [Task.UPGRADE],
     [Role.REPAIRER]:    [Task.REPAIR],
-    [Role.BUILDER]:     [Task.BUILD]
+    [Role.BUILDER]:     [Task.BUILD],
+    [Role.SAFER]:       [Task.STORE]
 }
 
 export function run(creep: Creep): void {
