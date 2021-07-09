@@ -70,7 +70,7 @@ export function run(): void {
                 const creepName: string = neededRole + "_" + Math.random().toString(36).substr(2, 5);
 
                 const saferCount = _.filter(Game.creeps, c => c.memory.role === Role.SAFER && c.memory.room === spawn.room.name).length;
-                let energyRemaining: number = saferCount >= 0 ? spawn.room.energyCapacityAvailable : spawn.store.getCapacity(RESOURCE_ENERGY);
+                let energyRemaining: number = saferCount > 0 ? spawn.room.energyCapacityAvailable : spawn.store.getCapacity(RESOURCE_ENERGY);
                 const creepParts: BodyPartConstant[] = [];
 
                 const keys = Object.keys(RoleBodyParts[neededRole as Role]);
