@@ -1,4 +1,4 @@
-import {Role, RoleBodyParts, RoleTasks} from "./rolesManager";
+import {Role, RoleTasks} from "./rolesManager";
 
 Room.prototype.configuration = function () {
     return [
@@ -29,6 +29,15 @@ Room.prototype.configuration = function () {
     ];
 }
 
+export const RoleBodyParts: Record<Role, Record<string, number>> = {
+    [Role.HARVESTER]:   {[MOVE]: 0.1, [CARRY]: 0.1, [WORK]: 0.8},
+    [Role.CARRIER]:     {[MOVE]: 0.4, [CARRY]: 0.5, [WORK]: 0.1},
+    [Role.UPGRADER]:    {[MOVE]: 0.1, [CARRY]: 0.4, [WORK]: 0.5},
+    [Role.REPAIRER]:    {[MOVE]: 0.3, [CARRY]: 0.3, [WORK]: 0.4},
+    [Role.BUILDER]:     {[MOVE]: 0.3, [CARRY]: 0.3, [WORK]: 0.4},
+    [Role.SAFER]:       {[MOVE]: 0.4, [CARRY]: 0.5, [WORK]: 0.1}
+}
+
 Room.prototype.neededRoles = function () {
     const neededRoles: string[] = [];
     for (const configuration of configurations[this.name]) {
@@ -56,18 +65,32 @@ export function run(): void {
 
         const neededRole = room.neededRoles()[0];
         if (neededRole) {
-            const spawn = _.filter(room.closestSpawns(), s => !s.spawning && s.store[RESOURCE_ENERGY] >= _.sum(RoleBodyParts[neededRole].map((b) => BODYPART_COST[b])))[0];
+            const spawn: StructureSpawn = _.filter(room.closestSpawns(), s => !s.spawning)[0];
             if (spawn) {
-                const creepName = neededRole + "_" + Math.random().toString(36).substr(2, 5);
-                const spawnStatus = spawn.spawnCreep(RoleBodyParts[neededRole], creepName, {
+                const creepName: string = neededRole + "_" + Math.random().toString(36).substr(2, 5);
+
+                const saferCount = _.filter(Game.creeps, c => c.memory.role === Role.SAFER && c.memory.room === spawn.room.name).length;
+                let energyRemaining: number = saferCount >= 0 ? spawn.room.energyCapacityAvailable : spawn.store.getCapacity(RESOURCE_ENERGY);
+                const creepParts: BodyPartConstant[] = [];
+
+                const keys = Object.keys(RoleBodyParts[neededRole as Role]);
+                for (const bodyPart in RoleBodyParts[neededRole as Role]) {
+                    const percentage = RoleBodyParts[neededRole as Role][bodyPart];
+                    const isLast = keys[keys.length] === bodyPart;
+
+                    for (let i = 0; i < (isLast ? energyRemaining : energyRemaining * percentage) / BODYPART_COST[bodyPart as BodyPartConstant]; i++) {
+                        creepParts.push(bodyPart as BodyPartConstant);
+                        energyRemaining -= BODYPART_COST[bodyPart as BodyPartConstant];
+                    }
+                }
+
+                const spawnStatus = spawn.spawnCreep(creepParts, creepName, {
                     memory: {
                         role: neededRole,
                         task: RoleTasks[neededRole][0],
                         room: room.name
                     }
                 });
-
-                console.log(RoleTasks[neededRole][0]);
 
                 if (spawnStatus === OK)
                     console.log(`Spawn ${creepName} on ${spawn.name} in ${room.name}`);

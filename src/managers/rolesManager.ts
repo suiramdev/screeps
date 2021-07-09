@@ -9,15 +9,6 @@ export enum Role {
     SAFER = "SAFER"
 }
 
-export const RoleBodyParts: Record<string, BodyPartConstant[]> = {
-    [Role.HARVESTER]:   [MOVE, WORK, WORK],
-    [Role.CARRIER]:     [MOVE, MOVE, CARRY, CARRY],
-    [Role.UPGRADER]:    [MOVE, CARRY, WORK, WORK],
-    [Role.REPAIRER]:    [MOVE, CARRY, WORK],
-    [Role.BUILDER]:     [MOVE, CARRY, WORK],
-    [Role.SAFER]:       [MOVE, CARRY, CARRY]
-}
-
 export const RoleTasks: Record<string, string[]> = {
     [Role.HARVESTER]:   [Task.HARVEST],
     [Role.CARRIER]:     [Task.CARRY, Task.SPREAD_ENERGY],
