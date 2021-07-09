@@ -31,6 +31,16 @@ export function run(creep: Creep): void {
         return;
     }
 
+    // Any creeps repair damaged structures in their range
+    if (creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+        const damagedStructures = _.filter(creep.pos.findInRange(FIND_MY_STRUCTURES,  3), s => s.hits < s.hitsMax);
+        if (damagedStructures.length > 0) {
+            creep.repair(creep.pos.findClosestByRange(damagedStructures) as Structure);
+
+            return;
+        }
+    }
+
     if (!creep.memory.task) creep.memory.task = RoleTasks[creep.memory.role][0];
 
     const taskStatus = creep.runTask(creep.memory.task);
