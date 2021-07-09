@@ -12,7 +12,7 @@ export function run(creep: Creep): TaskStatus {
             structure.structureType === STRUCTURE_EXTENSION ||
             structure.structureType === STRUCTURE_STORAGE ||
             structure.structureType === STRUCTURE_TOWER) &&
-            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+            (structure as StructureStorage).store.getFreeCapacity(RESOURCE_ENERGY) > 0
     });
 
     if (!storages) {
