@@ -23,6 +23,7 @@ export function run(creep: Creep): void {
         return;
     }
 
+    // Self-harvest
     if (creep.memory.needEnergy && creep.store.getFreeCapacity() > 0 &&
         _.filter(Game.creeps, c => c.memory.role === Role.CARRIER).length <= 0) {
         const target: Source | null = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
