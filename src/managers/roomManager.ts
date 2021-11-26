@@ -59,6 +59,7 @@ export function run(): void {
     for (const roomHash in Game.rooms) {
         const room = Game.rooms[roomHash];
 
+        // Calculation of room configuration each X ticks
         if (Game.time % 100 === 0 || !configurations[roomHash]) {
             configurations[roomHash] = room.configuration();
         }
