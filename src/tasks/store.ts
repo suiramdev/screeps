@@ -7,7 +7,7 @@ export function run(creep: Creep): TaskStatus {
         return TaskStatus.COMPLETED;
     } else if (creep.store.getFreeCapacity() <= 0) creep.memory.needEnergy = false;
 
-    const storages = creep.room.find(FIND_STRUCTURES, {
+    const storages = creep.room.find(FIND_MY_STRUCTURES, {
         filter: (structure) => (structure.structureType === STRUCTURE_SPAWN ||
             structure.structureType === STRUCTURE_EXTENSION ||
             structure.structureType === STRUCTURE_STORAGE ||
