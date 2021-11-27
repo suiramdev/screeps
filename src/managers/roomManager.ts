@@ -1,4 +1,5 @@
 import {Role, RoleBodyParts, RoleTasks} from "./rolesManager";
+import {roomLink} from "../utils/room";
 
 Room.prototype.configuration = function () {
     return [
@@ -92,7 +93,7 @@ export function run(): void {
                     });
 
                     if (spawnStatus === OK)
-                        console.log(`Spawn ${creepName} on ${spawn.name} in ${room.name}`);
+                        console.log(`<span style="color: gray;">Spawn ${creepName} on ${spawn.name} in ${roomLink(room.name)}</span>`);
                 }
             }
         });
