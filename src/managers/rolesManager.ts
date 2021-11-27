@@ -18,6 +18,15 @@ export const RoleTasks: Record<string, string[]> = {
     [Role.SAFER]:       [Task.STORE]
 }
 
+export const RoleBodyParts: Record<Role, Record<string, number>> = {
+  [Role.HARVESTER]:   {[MOVE]: 0.1, [CARRY]: 0.1, [WORK]: 0.8},
+  [Role.CARRIER]:     {[MOVE]: 0.4, [CARRY]: 0.5, [WORK]: 0.1},
+  [Role.UPGRADER]:    {[MOVE]: 0.1, [CARRY]: 0.4, [WORK]: 0.5},
+  [Role.REPAIRER]:    {[MOVE]: 0.3, [CARRY]: 0.3, [WORK]: 0.4},
+  [Role.BUILDER]:     {[MOVE]: 0.3, [CARRY]: 0.3, [WORK]: 0.4},
+  [Role.SAFER]:       {[MOVE]: 0.4, [CARRY]: 0.5, [WORK]: 0.1}
+}
+
 export function run(creep: Creep): void {
     if (creep.memory.pauseRole) {
         return;

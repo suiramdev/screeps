@@ -6,7 +6,7 @@ import profiler from "utils/screeps-profiler";
 
 import * as memoryManager from "managers/memoryManager";
 import * as rolesManager from "managers/rolesManager";
-import * as spawnManager from "managers/spawnManager";
+import * as spawnManager from "managers/roomManager";
 import * as structuresManager from "managers/structuresManager";
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
