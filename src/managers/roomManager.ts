@@ -54,7 +54,6 @@ export function run(): void {
         if (Game.time % 100 === 0 || !configurations[roomHash]) {
             configurations[roomHash] = room.configuration();
             configurations[roomHash].forEach(conf => subpopulations[roomHash] += conf.needed);
-            console.log(subpopulations[roomHash]);
         }
     }
 
@@ -64,7 +63,6 @@ export function run(): void {
 
             const neededRole = room.neededRoles()[0];
             if (neededRole) {
-                console.log(neededRole);
                 // TODO: Look to unused creeps
                 const spawn: StructureSpawn = _.filter(room.closestSpawns(), s => !s.spawning)[0];
                 if (spawn) {
