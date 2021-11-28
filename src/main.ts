@@ -6,7 +6,7 @@ import profiler from "utils/screeps-profiler";
 
 import * as memoryManager from "managers/memoryManager";
 import * as rolesManager from "managers/rolesManager";
-import * as spawnManager from "managers/roomManager";
+import * as roomManager from "managers/roomManager";
 import * as structuresManager from "managers/structuresManager";
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
@@ -16,7 +16,7 @@ import * as structuresManager from "managers/structuresManager";
 export const loop = ErrorMapper.wrapLoop(() => {
     profiler.wrap(() => {
         memoryManager.run();
-        spawnManager.run();
+        roomManager.run();
         for (const creepHash in Game.creeps) {
             const creep: Creep = Game.creeps[creepHash];
 
