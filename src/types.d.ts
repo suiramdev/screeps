@@ -4,6 +4,7 @@ interface Memory {
 
 interface CreepMemory {
     role: string;
+    taskIndex: number;
     task: string;
     room: string;
     needEnergy?: boolean;

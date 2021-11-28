@@ -22,10 +22,6 @@ Room.prototype.configuration = function () {
         {
             role: Role.BUILDER,
             needed: this.find(FIND_MY_CONSTRUCTION_SITES).length > 0 ? 1 : 0
-        },
-        {
-            role: Role.SAFER,
-            needed: this.sourceStorages().length
         }
     ];
 }
@@ -69,25 +65,23 @@ export function run(): void {
                 if (spawn) {
                     const creepName: string = neededRole + "_" + Math.random().toString(36).substr(2, 5);
 
-                    const saferCount = _.filter(Game.creeps, c => c.memory.role === Role.SAFER && c.memory.room === spawn.room.name).length;
-                    let energyRemaining: number = saferCount > 0 ? spawn.room.energyCapacityAvailable : spawn.store.getCapacity(RESOURCE_ENERGY);
                     const creepParts: BodyPartConstant[] = [];
-
                     const keys = Object.keys(RoleBodyParts[neededRole as Role]);
                     for (const bodyPart in RoleBodyParts[neededRole as Role]) {
                         const percentage = RoleBodyParts[neededRole as Role][bodyPart];
                         const isLast = keys[keys.length] === bodyPart;
 
-                        for (let i = 0; i < (isLast ? energyRemaining : energyRemaining * percentage) / BODYPART_COST[bodyPart as BodyPartConstant]; i++) {
+                        for (let i = 0; i < (isLast ? spawn.room.energyCapacityAvailable : spawn.room.energyCapacityAvailable * percentage) / BODYPART_COST[bodyPart as BodyPartConstant]; i++) {
                             creepParts.push(bodyPart as BodyPartConstant);
-                            energyRemaining -= BODYPART_COST[bodyPart as BodyPartConstant];
+                            spawn.room.energyCapacityAvailable -= BODYPART_COST[bodyPart as BodyPartConstant];
                         }
                     }
 
                     const spawnStatus = spawn.spawnCreep(creepParts, creepName, {
                         memory: {
                             role: neededRole,
-                            task: RoleTasks[neededRole][0],
+                            taskIndex: 0,
+                            task: RoleTasks[neededRole][0][0],
                             room: room.name
                         }
                     });

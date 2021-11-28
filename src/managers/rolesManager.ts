@@ -5,17 +5,15 @@ export enum Role {
     CARRIER = "CARRIER",
     UPGRADER = "UPGRADER",
     REPAIRER = "REPAIRER",
-    BUILDER = "BUILDER",
-    SAFER = "SAFER"
+    BUILDER = "BUILDER"
 }
 
-export const RoleTasks: Record<string, string[]> = {
-    [Role.HARVESTER]:   [Task.HARVEST],
-    [Role.CARRIER]:     [Task.CARRY, Task.SPREAD_ENERGY],
-    [Role.UPGRADER]:    [Task.UPGRADE],
-    [Role.REPAIRER]:    [Task.REPAIR],
-    [Role.BUILDER]:     [Task.BUILD],
-    [Role.SAFER]:       [Task.STORE]
+export const RoleTasks: Record<string, string[][]> = {
+    [Role.HARVESTER]:   [[Task.HARVEST]],
+    [Role.CARRIER]:     [[Task.CARRY], [Task.STORE, Task.SPREAD_ENERGY], [Task.SPREAD_ENERGY]],
+    [Role.UPGRADER]:    [[Task.UPGRADE]],
+    [Role.REPAIRER]:    [[Task.REPAIR, Task.BUILD]],
+    [Role.BUILDER]:     [[Task.BUILD, Task.REPAIR]]
 }
 
 export const RoleBodyParts: Record<Role, Record<string, number>> = {
@@ -23,8 +21,7 @@ export const RoleBodyParts: Record<Role, Record<string, number>> = {
   [Role.CARRIER]:     {[MOVE]: 0.4, [CARRY]: 0.5, [WORK]: 0.1},
   [Role.UPGRADER]:    {[MOVE]: 0.1, [CARRY]: 0.4, [WORK]: 0.5},
   [Role.REPAIRER]:    {[MOVE]: 0.3, [CARRY]: 0.3, [WORK]: 0.4},
-  [Role.BUILDER]:     {[MOVE]: 0.3, [CARRY]: 0.3, [WORK]: 0.4},
-  [Role.SAFER]:       {[MOVE]: 0.4, [CARRY]: 0.5, [WORK]: 0.1}
+  [Role.BUILDER]:     {[MOVE]: 0.3, [CARRY]: 0.3, [WORK]: 0.4}
 }
 
 export function run(creep: Creep): void {
@@ -32,7 +29,7 @@ export function run(creep: Creep): void {
         return;
     }
 
-    // Self-harvest
+    // Self-harvest energy
     if (creep.memory.needEnergy && creep.store.getFreeCapacity() > 0 &&
         _.filter(Game.creeps, c => c.memory.role === Role.CARRIER).length <= 0) {
         const target: Source | null = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
@@ -51,13 +48,23 @@ export function run(creep: Creep): void {
         }
     }
 
-    if (!creep.memory.task) creep.memory.task = RoleTasks[creep.memory.role][0];
-
-    const taskStatus = creep.runTask(creep.memory.task);
-    if (taskStatus === TaskStatus.COMPLETED) {
-        const currentTaskIndex = RoleTasks[creep.memory.role].indexOf(creep.memory.task);
-        const nextTaskIndex = currentTaskIndex + 1 > RoleTasks[creep.memory.role].length ? 0 : currentTaskIndex + 1
-        creep.memory.task = RoleTasks[creep.memory.role][nextTaskIndex];
+    // Assign creep task and run it
+    const creepTasks = RoleTasks[creep.memory.role];
+    if (!creep.memory.task) {
+        creep.memory.taskIndex = 0;
+        creep.memory.task = creepTasks[0][0];
+    }
+    switch (creep.runTask(creep.memory.task)) {
+        case TaskStatus.COMPLETED:
+            creep.memory.taskIndex += 1;
+            if (!creepTasks[creep.memory.taskIndex]) creep.memory.taskIndex = 0;
+            creep.memory.task = creepTasks[creep.memory.taskIndex][0];
+            break;
+        case TaskStatus.FAILED:
+            let nextSubTaskIndex = Object.values(creepTasks[creep.memory.taskIndex]).indexOf(creep.memory.task)+1;
+            if (!creepTasks[creep.memory.taskIndex][nextSubTaskIndex]) nextSubTaskIndex = 0;
+            creep.memory.task = creepTasks[creep.memory.taskIndex][nextSubTaskIndex]
+            break;
     }
 
     if (Memory.debug.drawRoles) {
