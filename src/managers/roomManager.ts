@@ -17,7 +17,7 @@ Room.prototype.configuration = function () {
         },
         {
             role: Role.REPAIRER,
-            needed: this.find(FIND_MY_STRUCTURES).length > 0 ? 1 : 0
+            needed: _.filter(this.find(FIND_MY_STRUCTURES), s => s.hits < s.hitsMax).length > 0 ? 1 : 0
         },
         {
             role: Role.BUILDER,
