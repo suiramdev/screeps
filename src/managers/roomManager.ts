@@ -38,7 +38,7 @@ Room.prototype.neededRoles = function () {
 }
 
 Room.prototype.closestSpawns = function () {
-    return _.sortBy(Game.spawns, s => Game.map.getRoomLinearDistance(this.name, s.room.name));
+    return _.sortByOrder(Game.spawns, s => Game.map.getRoomLinearDistance(this.name, s.room.name), ["desc"]);
 }
 
 const configurations: Record<string, any[]> = {};
