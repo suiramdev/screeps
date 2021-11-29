@@ -12,8 +12,8 @@ export const RoleTasks: Record<string, string[][]> = {
     [Role.HARVESTER]:   [[Task.HARVEST]],
     [Role.CARRIER]:     [[Task.CARRY], [Task.STORE, Task.SPREAD_ENERGY]],
     [Role.UPGRADER]:    [[Task.UPGRADE]],
-    [Role.REPAIRER]:    [[Task.REPAIR, Task.BUILD]],
-    [Role.BUILDER]:     [[Task.BUILD, Task.REPAIR]]
+    [Role.REPAIRER]:    [[Task.REPAIR, Task.BUILD, Task.UPGRADE]],
+    [Role.BUILDER]:     [[Task.BUILD, Task.REPAIR, Task.UPGRADE]]
 }
 
 export const RoleBodyParts: Record<Role, Record<string, number>> = {
