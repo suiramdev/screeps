@@ -15,7 +15,7 @@ export function run(creep: Creep): TaskStatus {
             (structure as StructureStorage).store.getFreeCapacity(RESOURCE_ENERGY) > 0
     });
 
-    if (!storages) {
+    if (storages.length <= 0) {
         creep.speech("📦❌");
 
         return TaskStatus.FAILED;
