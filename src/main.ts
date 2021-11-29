@@ -23,6 +23,16 @@ export const loop = ErrorMapper.wrapLoop(() => {
             rolesManager.run(creep);
         }
 
+        for (const flagHash in Game.flags) {
+            const flag: Flag = Game.flags[flagHash];
+            const creep = _.find(Game.creeps, c => c.name === flag.name);
+            if (creep)
+                if (!creep.pos.isEqualTo(flag.pos))
+                    creep.travelTo(flag.pos);
+                else
+                    flag.remove();
+        }
+
         const towers = _.filter(Game.structures, (s) => s.structureType === STRUCTURE_TOWER);
 
         for (const tower of towers)
