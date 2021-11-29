@@ -10,7 +10,7 @@ export enum Role {
 
 export const RoleTasks: Record<string, string[][]> = {
     [Role.HARVESTER]:   [[Task.HARVEST]],
-    [Role.CARRIER]:     [[Task.CARRY], [Task.STORE, Task.SPREAD_ENERGY], [Task.SPREAD_ENERGY]],
+    [Role.CARRIER]:     [[Task.CARRY], [Task.STORE, Task.SPREAD_ENERGY]],
     [Role.UPGRADER]:    [[Task.UPGRADE]],
     [Role.REPAIRER]:    [[Task.REPAIR, Task.BUILD]],
     [Role.BUILDER]:     [[Task.BUILD, Task.REPAIR]]
