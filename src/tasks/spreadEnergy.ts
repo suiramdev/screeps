@@ -4,8 +4,8 @@ import {Role} from "../managers/rolesManager";
 export function run(creep: Creep): TaskStatus {
     if (creep.store.getUsedCapacity(RESOURCE_ENERGY) <= 0) return TaskStatus.COMPLETED;
 
-    const possibleTargets = _.sortBy(_.filter(Game.creeps, c => c.memory.needEnergy),
-        c => c.store.getFreeCapacity(RESOURCE_ENERGY) && creep.pos.getRangeTo(c));
+    const possibleTargets = _.sortByOrder(_.filter(Game.creeps, c => c.memory.needEnergy),
+        c => c.store.getFreeCapacity(RESOURCE_ENERGY) && creep.pos.getRangeTo(c), ["desc", "desc"]);
 
     let target: Creep|null = _.filter(possibleTargets, c => c.id === creep.memory.target)[0];
     if (!target) {
