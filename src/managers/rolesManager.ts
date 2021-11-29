@@ -61,7 +61,7 @@ export function run(creep: Creep): void {
             creep.memory.task = creepTasks[creep.memory.taskIndex][0];
             break;
         case TaskStatus.FAILED:
-            let nextSubTaskIndex = Object.values(creepTasks[creep.memory.taskIndex]).indexOf(creep.memory.task)+1;
+            let nextSubTaskIndex = _.indexOf(creepTasks[creep.memory.taskIndex], creep.memory.task)+1;
             if (!creepTasks[creep.memory.taskIndex][nextSubTaskIndex]) nextSubTaskIndex = 0;
             creep.memory.task = creepTasks[creep.memory.taskIndex][nextSubTaskIndex]
             break;
