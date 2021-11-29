@@ -64,13 +64,14 @@ export function run(): void {
 
                 const creepParts: BodyPartConstant[] = [];
                 const keys = Object.keys(RoleBodyParts[neededRole as Role]);
+                let energyAvailable: number = spawn.room.energyAvailable;
                 for (const bodyPart in RoleBodyParts[neededRole as Role]) {
                     const percentage = RoleBodyParts[neededRole as Role][bodyPart];
                     const isLast = keys[keys.length] === bodyPart;
 
-                    for (let i = 0; i < (isLast ? spawn.room.energyAvailable : spawn.room.energyAvailable * percentage) / BODYPART_COST[bodyPart as BodyPartConstant]; i++) {
+                    for (let i = 0; i < (isLast ? energyAvailable : energyAvailable * percentage) / BODYPART_COST[bodyPart as BodyPartConstant]; i++) {
                         creepParts.push(bodyPart as BodyPartConstant);
-                        spawn.room.energyAvailable -= BODYPART_COST[bodyPart as BodyPartConstant];
+                        energyAvailable -= BODYPART_COST[bodyPart as BodyPartConstant];
                     }
                 }
 
