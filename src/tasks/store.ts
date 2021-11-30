@@ -13,7 +13,7 @@ export function run(creep: Creep): TaskStatus {
                 s.structureType === STRUCTURE_STORAGE ||
                 s.structureType === STRUCTURE_TOWER) &&
                 (s as StructureStorage).store.getFreeCapacity(RESOURCE_ENERGY) > 0
-    }), s => s.store.getFreeCapacity(RESOURCE_ENERGY) && creep.pos.getRangeTo(s), ["desc"]);
+    }), s => s.store.getFreeCapacity(RESOURCE_ENERGY) && creep.pos.getRangeTo(s), ["desc", "desc"]);
 
     if (storages.length <= 0) return TaskStatus.FAILED;
 
