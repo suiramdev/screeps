@@ -11,15 +11,12 @@ export function run(creep: Creep): TaskStatus {
 
     if (!room.controller) return TaskStatus.FAILED;
 
-    if (room.controller.sign?.text !== signText) {
-        if (creep.signController(room.controller, signText) === ERR_NOT_IN_RANGE) {
+    if (room.controller.sign?.text !== signText)
+        if (creep.signController(room.controller, signText) === ERR_NOT_IN_RANGE)
             creep.travelTo(room.controller);
-        }
-    }
 
-    if (creep.upgradeController(room.controller) === ERR_NOT_IN_RANGE) {
+    if (creep.upgradeController(room.controller) === ERR_NOT_IN_RANGE)
         creep.travelTo(room.controller);
-    }
 
     creep.speech("🔧");
 

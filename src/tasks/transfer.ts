@@ -24,10 +24,10 @@ export function run(creep: Creep): TaskStatus {
         return TaskStatus.FAILED;
     }
     
-    creep.speech("📦");
-    
     if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) 
-        creep.moveTo(storage);
+        creep.travelTo(storage);
+
+    creep.speech("📦");
   
     return TaskStatus.WORKING;
 }
