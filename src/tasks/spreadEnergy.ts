@@ -14,6 +14,7 @@ export function run(creep: Creep): TaskStatus {
 
             target = anyCreep;
             creep.memory.target = anyCreep.id;
+            break;
         }
 
         if (!target) return TaskStatus.COMPLETED;
